@@ -132,7 +132,7 @@ int main(int argc, char **argv) {
         min_max = GetMinMax(array, begin, end);
 
         if (with_files) {
-          char filename[20];
+          char filename[32];
           sprintf(filename, "result_%d.txt", i);
           FILE *file = fopen(filename, "w");
           fprintf(file, "%d %d\n", min_max.min, min_max.max);
@@ -168,7 +168,7 @@ int main(int argc, char **argv) {
     int max = INT_MIN;
 
     if (with_files) {
-      char filename[20];
+      char filename[32];
       sprintf(filename, "result_%d.txt", i);
       FILE *file = fopen(filename, "r");
       fscanf(file, "%d %d", &min, &max);
