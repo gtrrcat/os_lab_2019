@@ -206,9 +206,19 @@ int main(int argc, char **argv) {
     }
 
     while (active_child_processes > 0) {
-        wait(NULL);
-        active_child_processes -= 1;
+    pid_t finished_pid = waitpid(-1, NULL, WNOHANG);
+    
+    if (finished_pid > 0) {
+        active_child_processes--;
+    } else if (finished_pid == 0) {
+        // Нет завершённых процессов, можно делать что-то ещё
+        sleep(1);  // Или usleep для меньшей задержки
+    } else {
+        // Ошибка
+        perror("waitpid");
+        break;
     }
+}
 
     // Отменяем alarm, если он еще не сработал
     if (timeout > 0) {
